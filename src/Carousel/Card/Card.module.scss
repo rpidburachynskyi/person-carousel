@@ -24,6 +24,24 @@ $fourth-card: (
 @mixin card-factory($index) {
     $main-card-width: map-get($main-card, 'width');
 
+    transition: all 10s ease;
+    transition-property: height, width, left, top, transform, z-index, blur;
+
+    &::before {
+        content: '';
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.6) 100%);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        filter: blur(4px);
+
+        transition: all 10s ease;
+        // transition-property: transform;
+    }
+
     @if $index <= 0 or $index >= 8 {
         height: 0;
         width: 0;
@@ -38,6 +56,8 @@ $fourth-card: (
     
             transform: perspective(12) rotateY(1deg);
         }
+
+        filter: blur(7px);
         
         z-index: 1;
     } @else {
@@ -45,6 +65,8 @@ $fourth-card: (
             $height: map-get($fourth-card, $key: 'height');
             $width: map-get($fourth-card, $key: 'width');
             $offset: map-get($fourth-card, $key: 'offset');
+
+            $multiply-coef: if($index == 7, 1, -1);
 
             height: $height;
             width: $width;
@@ -62,16 +84,24 @@ $fourth-card: (
                 transform: perspective(12px) rotateY(1deg);
             }
 
+            filter: blur(5px);
+
             z-index: 2;
+
+            &::before {
+                transform: rotate(0deg) translate($multiply-coef * 98px, 228px) skewX($multiply-coef * 45deg);
+            }
         }
 
-        @if $index == 2 or $index == 6{  
+        @if $index == 2 or $index == 6 {  
             $height: map-get($third-card, $key: 'height');
             $width: map-get($third-card, $key: 'width');
             $offset: map-get($third-card, $key: 'offset');
 
             height: $height;
             width: $width;
+
+            $multiply-coef: if($index == 6, 1, -1);
 
             top: calc(50% - #{$height / 2});
 
@@ -85,8 +115,15 @@ $fourth-card: (
         
                 transform: perspective(15px) rotateY(1deg);
             }
+
+            filter: blur(4px);
                 
             z-index: 3;
+
+            &::before {
+                content: '';
+                transform: rotate(0deg) translate($multiply-coef * 98px, 228px) skewX($multiply-coef * 45deg);
+            }
         }
 
         @if $index == 3 or $index == 5 {   
@@ -96,6 +133,8 @@ $fourth-card: (
 
             height: $height;
             width: $width;
+
+            $multiply-coef: if($index == 5, 1, -1);
 
             top: calc(50% - #{$height / 2});
 
@@ -107,8 +146,23 @@ $fourth-card: (
             }
             
             transform: perspective(25px)  rotateY(#{-4 + $index + deg});
+
+            filter: blur(3px);
             
             z-index: 4;
+
+            &::before {
+                content: '';
+                width: 60%;
+                transform: perspective(13px) rotateX(1deg) translate($multiply-coef * 98px, 228px) skewX($multiply-coef * 45deg);
+
+                @if($index == 3) {
+                    transform: perspective(13px) rotateX(1deg) translate(calc(-98px - 40%), 228px) skewX($multiply-coef * 45deg);
+                }
+                @else {
+                    transform: perspective(13px) rotateX(1deg) translate(98px, 228px) skewX($multiply-coef * 45deg);
+                }
+            }
         }
 
         @if $index == 4 {
@@ -124,6 +178,10 @@ $fourth-card: (
             transform: perspective(0)  rotateY(0);
 
             z-index: 5;
+
+            &::before {
+                transform: translate(0, 225px) perspective(6px) rotateX(1deg);
+            }
         }
 
     }
@@ -134,9 +192,6 @@ $fourth-card: (
     position: absolute;
 
     border: 2px solid black;
-
-    transition: all 200ms ease;
-    transition-property: height, width, left, top, transform, z-index;
 
     background-size: 100% 100%;
     background-image: url(https://i.pinimg.com/originals/83/f9/37/83f937b69f30bb886ab8a03390da6771.jpg);
@@ -176,4 +231,7 @@ $fourth-card: (
     &:nth-child(9) {
         @include card-factory(8);
     }
+
+    
+
 }
