@@ -21,16 +21,24 @@ $fourth-card: (
     'offset': 340px
 );
 
+$cover-card-gradient: (
+    'from': #1b1c25,
+    '29': #282937,
+    'to': #505166
+);
+
+$transition-time: 300ms;
+
 @mixin card-factory($index) {
     $main-card-width: map-get($main-card, 'width');
 
-    transition: all 10s ease;
-    transition-property: height, width, left, top, transform, z-index, blur;
+    transition: all $transition-time ease;
+    transition-property: height, width, left, top, transform, z-index, filter;
 
     &::before {
         content: '';
         width: 100%;
-        height: 200px;
+        height: 220px;
         background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.6) 100%);
         position: absolute;
         bottom: 0;
@@ -38,28 +46,48 @@ $fourth-card: (
 
         filter: blur(4px);
 
-        transition: all 10s ease;
-        // transition-property: transform;
+        transition: all $transition-time ease;
+    }
+
+    &::after {
+        content:'';
+        position:absolute;
+        left:0; top:0;
+        width:100%; height:100%;
+        display:inline-block;
+        background-image: linear-gradient(90deg, #1b1c25cc 0%,#505166cc 100%);
+
+        opacity: 1;
+
+        transition: opacity $transition-time ease;
     }
 
     @if $index <= 0 or $index >= 8 {
         height: 0;
         width: 0;
 
+        $multiply-coef: if($index >= 8, 1, -1);
+
         top: calc(50%);
         @if $index <= 0 { 
             left: calc(50% - (#{$main-card-width} / 2) - 430px);
 
-            transform: perspective(10px)  rotateY(-1deg);
+            transform: perspective(100px)  rotateY(-1deg);
         } @else {    
             left: calc(50% + (#{$main-card-width} / 2) + 430px);
     
-            transform: perspective(12) rotateY(1deg);
+            transform: perspective(100px) rotateY(0);
         }
 
         filter: blur(7px);
         
         z-index: 1;
+        
+
+        &::before {
+            height: 0;
+            transform: perspective(50px) rotateX(1deg) rotateY(0) translate($multiply-coef * 0px, 0px) skewX($multiply-coef * 45deg);
+        }
     } @else {
         @if $index == 1 or $index == 7 { 
             $height: map-get($fourth-card, $key: 'height');
@@ -76,7 +104,7 @@ $fourth-card: (
             @if($index == 1) {         
                 left: calc(50% - (#{$main-card-width} / 2) - #{$offset + 20px});
         
-                transform: perspective(12px)  rotateY(-1deg);
+                transform: perspective(12px) rotateY(-1deg);
             }
             @else {
                 left: calc(50% + (#{$main-card-width} / 2) + #{$offset - $width + 30px});
@@ -89,7 +117,8 @@ $fourth-card: (
             z-index: 2;
 
             &::before {
-                transform: rotate(0deg) translate($multiply-coef * 98px, 228px) skewX($multiply-coef * 45deg);
+                height: 155px;
+                transform: perspective(50px) rotateX(1deg) rotateY(0) translate($multiply-coef * 93px, 167px) skewX($multiply-coef * 52deg);
             }
         }
 
@@ -122,7 +151,7 @@ $fourth-card: (
 
             &::before {
                 content: '';
-                transform: rotate(0deg) translate($multiply-coef * 98px, 228px) skewX($multiply-coef * 45deg);
+                transform: perspective(220px) rotateX(1deg) rotateY(0) translate($multiply-coef * 98px, 220px) skewX($multiply-coef * 45deg);
             }
         }
 
@@ -145,7 +174,7 @@ $fourth-card: (
                 left: calc(50% + (#{$main-card-width} / 2) - #{$offset});
             }
             
-            transform: perspective(25px)  rotateY(#{-4 + $index + deg});
+            transform: perspective(25px) rotateY(#{-4 + $index + deg});
 
             filter: blur(3px);
             
@@ -153,14 +182,14 @@ $fourth-card: (
 
             &::before {
                 content: '';
+                height: 154px;
                 width: 60%;
-                transform: perspective(13px) rotateX(1deg) translate($multiply-coef * 98px, 228px) skewX($multiply-coef * 45deg);
 
                 @if($index == 3) {
-                    transform: perspective(13px) rotateX(1deg) translate(calc(-98px - 40%), 228px) skewX($multiply-coef * 45deg);
+                    transform: perspective(13px) rotateX(1deg) rotateY(0) translate(calc(-94px - 40%), 162px) skewX(-45deg);
                 }
                 @else {
-                    transform: perspective(13px) rotateX(1deg) translate(98px, 228px) skewX($multiply-coef * 45deg);
+                    transform: perspective(13px) rotateX(1deg) rotateY(0) translate(94px, 162px) skewX(45deg);
                 }
             }
         }
@@ -178,9 +207,15 @@ $fourth-card: (
             transform: perspective(0)  rotateY(0);
 
             z-index: 5;
+            filter: blur(0);
 
             &::before {
-                transform: translate(0, 225px) perspective(6px) rotateX(1deg);
+                width: 250px;
+                transform: perspective(6px) rotateX(1deg) translate(-30px, 210px) skewX(0deg);
+            }
+
+            &::after {
+                opacity: 0;
             }
         }
 
@@ -191,47 +226,17 @@ $fourth-card: (
 
     position: absolute;
 
-    border: 2px solid black;
 
     background-size: 100% 100%;
     background-image: url(https://i.pinimg.com/originals/83/f9/37/83f937b69f30bb886ab8a03390da6771.jpg);
 
-    &:nth-child(1) {
-        @include card-factory(0);
-    }
-
-    &:nth-child(2) {
-        @include card-factory(1);
-    }
-
-    &:nth-child(3) {
-        @include card-factory(2);
-    }
-
-    &:nth-child(4) {
-        @include card-factory(3);
-    }
-
-    &:nth-child(5) {
-        @include card-factory(4);
-    }
-
-    &:nth-child(6) {
-        @include card-factory(5);
-    }
-
-    &:nth-child(7) {
-        @include card-factory(6);
-    }
-
-    &:nth-child(8) {
-        @include card-factory(7);
-    }
-
-    &:nth-child(9) {
-        @include card-factory(8);
-    }
-
-    
-
+    &[attr-type=left-outer] { @include card-factory(0); }
+    &[attr-type=left-fourth] { @include card-factory(1); }
+    &[attr-type=left-third] { @include card-factory(2); }
+    &[attr-type=left-second] { @include card-factory(3); }
+    &[attr-type=main] { @include card-factory(4); }
+    &[attr-type=right-second] { @include card-factory(5); }
+    &[attr-type=right-third] { @include card-factory(6); }
+    &[attr-type=right-fourth] { @include card-factory(7); }
+    &[attr-type=right-outer] { @include card-factory(8); }
 }
