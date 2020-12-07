@@ -7,7 +7,7 @@ import back from '../Untitled-3.png';
 
 const Carousel = () => {
     const [index, setIndex] = useState(0);
-    const [cards, satCards] = useState(Array.from({ length: 130 }).map((c, i) => i));
+    const [cards] = useState(Array.from({ length: 130 }).map((c, i) => i));
 
     const viewCards = cards.filter((c, i) => i >= index - 15).filter((c, i) => i <= 50);
 
@@ -15,10 +15,6 @@ const Carousel = () => {
         <div className={classes.page}>
             <div className={classes.back} style={{background: `url(${back})`}}>
                 
-            </div>
-            <div>
-                <button onClick={() => setIndex(index - 1)} disabled={index === 0}>-1</button>
-                <button onClick={() => setIndex(index + 1)}>+1</button>
             </div>
             <div className={classes.carousel}>
                 <div className={classes.slider}>
@@ -34,7 +30,7 @@ const Carousel = () => {
                         else if(c === index + 3) type = 'right-fourth';
                         else type = 'right-outer';
                         console.log(c, type);
-                        return <Card type={type} key={c} />
+                        return <Card type={type} key={c} onMoveTo={() => setIndex(c)} />
                     })}
                 </div>
             </div>

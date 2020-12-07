@@ -4,11 +4,12 @@ export type CardType = 'main' | 'left-second' | 'left-third' | 'left-fourth' | '
 
 interface Props {
    type: CardType;
+   onMoveTo: () => void;
 }
 
-const Card = ({ type }: Props) => {
+const Card = ({ type, onMoveTo }: Props) => {
     return ( 
-        <div attr-type={type} className={classes.card}></div>
+        <div attr-type={type} onClick={onMoveTo} className={classes.card}></div>
      );
 }
 

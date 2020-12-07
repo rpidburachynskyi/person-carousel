@@ -151,7 +151,7 @@ $transition-time: 300ms;
 
             &::before {
                 content: '';
-                transform: perspective(220px) rotateX(1deg) rotateY(0) translate($multiply-coef * 98px, 220px) skewX($multiply-coef * 45deg);
+                transform: perspective(220px) rotateX(1deg) rotateY(0) translate($multiply-coef * 116px, 249px) skewX($multiply-coef * 45deg);
             }
         }
 
