@@ -24,9 +24,24 @@ interface Props {
 
 const Card = ({ type, onMoveTo }: Props) => {
 	const layers = [
-		<Layer type="person" src={YA} index={1} />,
-		<Layer type="other" src={ROS} index={2} />,
-		<Layer type="other" src={TIK} index={0} />,
+		<Layer
+			type="person"
+			src={YA}
+			index={1}
+			visibility={type !== "main" ? "slice" : "full"}
+		/>,
+		<Layer
+			type="other"
+			src={ROS}
+			index={2}
+			visibility={type !== "main" ? "slice" : "full"}
+		/>,
+		<Layer
+			type="other"
+			src={TIK}
+			index={0}
+			visibility={type !== "main" ? "slice" : "full"}
+		/>,
 	];
 
 	return (

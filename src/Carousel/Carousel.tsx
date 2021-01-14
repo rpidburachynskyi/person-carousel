@@ -18,7 +18,7 @@ const Carousel = () => {
 		<div className={classes.page}>
 			<div
 				className={classes.back}
-				style={{ background: `url(${back})` }}
+				// style={{ background: `url(${back})` }}
 			></div>
 			<div className={classes.carousel}>
 				<div className={classes.slider}>

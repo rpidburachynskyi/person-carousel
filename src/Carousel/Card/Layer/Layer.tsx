@@ -5,10 +5,19 @@ interface Props {
 
 	type: "person" | "other";
 	index: number;
+
+	visibility: string;
 }
 
-const Layer = ({ src, type }: Props) => {
-	return <img className={classes.layer} attr-type={type} src={src} />;
+const Layer = ({ src, type, visibility }: Props) => {
+	return (
+		<img
+			className={classes.layer}
+			attr-type={type}
+			src={src}
+			attr-visibility={visibility}
+		/>
+	);
 };
 
 export default Layer;

@@ -1,24 +1,49 @@
-$main-card: (
+$main-card-initial: (
     'height': 740px,
     'width': 350px
 );
 
-$second-card: (
+$second-card-initial: (
     'height': 500px,
     'width': 240px,
     'offset': 115px
 );
 
-$third-card: (
+$third-card-initial: (
     'height': 350px,
     'width': 120px,
     'offset': 230px
 );
 
-$fourth-card: (
+$fourth-card-initial: (
     'height': 260px,
     'width': 90px,
     'offset': 340px
+);
+
+$small-coef: 1;
+
+$main-card: (
+    'height': map-get($main-card-initial, 'height') * $small-coef,
+    'width': map-get($main-card-initial, 'width') * $small-coef
+);
+
+$second-card: (
+    'height': map-get($second-card-initial, 'height') * $small-coef,
+    'width': map-get($second-card-initial, 'width') * $small-coef,
+    'offset': map-get($second-card-initial, 'offset') * $small-coef
+);
+
+$third-card: (
+    'height': map-get($third-card-initial, 'height') * $small-coef,
+    'width': map-get($third-card-initial, 'width') * $small-coef,
+    'offset': map-get($third-card-initial, 'offset') * $small-coef
+);
+
+$fourth-card: (
+    'height': map-get($fourth-card-initial, 'height') * $small-coef,
+    'width': map-get($fourth-card-initial, 'width') * $small-coef,
+    'offset': map-get($fourth-card-initial, 'offset') * $small-coef
 );
 
 $cover-card-gradient: (
@@ -239,6 +264,8 @@ $transition-time: 300ms;
 
     display: flex;
     justify-content: center;
+
+    user-select: none;
 }
 
 .cardImage {

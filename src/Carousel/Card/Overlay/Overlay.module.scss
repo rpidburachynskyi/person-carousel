@@ -7,13 +7,24 @@
     pointer-events: none;
     user-select: none;
 
+    display: flex;
+    justify-content: center;
+
 }
 
 .layers {
     width: 100%;
+    overflow: auto;
     height: 100%;
+    display: flex;
+    justify-content: center;
 
     position: absolute;
 
     transition: 300ms all linear;
+
+    &[attr-visibility=slice] {
+        width: 37.83%;
+        overflow: hidden;
+    }
 }

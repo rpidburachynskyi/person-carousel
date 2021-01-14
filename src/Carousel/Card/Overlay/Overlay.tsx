@@ -24,7 +24,12 @@ const Overlay = ({ type, layers, isMain }: Props) => {
 
 	return (
 		<div key={type} className={classes.overlay}>
-			<div className={classes.layers} attr-type={type} key={type}>
+			<div
+				className={classes.layers}
+				attr-type={type}
+				key={type}
+				attr-visibility={!isMain ? "slice" : "full"}
+			>
 				{_layers}
 			</div>
 		</div>
