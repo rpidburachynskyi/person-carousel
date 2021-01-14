@@ -227,9 +227,6 @@ $transition-time: 300ms;
     position: absolute;
 
 
-    background-size: 100% 100%;
-    background-image: url(https://i.pinimg.com/originals/83/f9/37/83f937b69f30bb886ab8a03390da6771.jpg);
-
     &[attr-type=left-outer] { @include card-factory(0); }
     &[attr-type=left-fourth] { @include card-factory(1); }
     &[attr-type=left-third] { @include card-factory(2); }
@@ -239,4 +236,17 @@ $transition-time: 300ms;
     &[attr-type=right-third] { @include card-factory(6); }
     &[attr-type=right-fourth] { @include card-factory(7); }
     &[attr-type=right-outer] { @include card-factory(8); }
+
+    display: flex;
+    justify-content: center;
+}
+
+.cardImage {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
 }
