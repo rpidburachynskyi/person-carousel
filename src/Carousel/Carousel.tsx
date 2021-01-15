@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSwipeable } from "react-swipeable";
 import Card from "./Card/Card";
 import { CardType } from "./Card/Card";
 import classes from "./Carousel.module.scss";
@@ -14,6 +15,13 @@ const Carousel = () => {
 		.filter((c, i) => i >= index - 15)
 		.filter((c, i) => i <= 50);
 
+	const handlers = useSwipeable({
+		onSwipedLeft: () => setIndex((index) => index + 1),
+		onSwipedRight: () => setIndex((index) => index - 1),
+		preventDefaultTouchmoveEvent: true,
+		trackMouse: true,
+	});
+
 	return (
 		<div className={classes.page}>
 			<div
@@ -21,7 +29,7 @@ const Carousel = () => {
 				// style={{ background: `url(${back})` }}
 			></div>
 			<div className={classes.carousel}>
-				<div className={classes.slider}>
+				<div className={classes.slider} {...handlers}>
 					{viewCards.map((c, i) => {
 						let type: CardType;
 						if (c <= index - 4) type = "left-outer";
@@ -33,7 +41,6 @@ const Carousel = () => {
 						else if (c === index + 2) type = "right-third";
 						else if (c === index + 3) type = "right-fourth";
 						else type = "right-outer";
-						console.log(c, type);
 						return (
 							<Card
 								type={type}
