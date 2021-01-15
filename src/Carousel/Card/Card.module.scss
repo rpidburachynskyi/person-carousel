@@ -23,28 +23,44 @@ $fourth-card-initial: (
 
 $small-coef: 1;
 
-$main-card: (
-    'height': map-get($main-card-initial, 'height') * $small-coef,
-    'width': map-get($main-card-initial, 'width') * $small-coef
-);
+@function getMainCard($small-coef) {
+    @return (
+        'height': map-get($main-card-initial, 'height') * $small-coef,
+        'width': map-get($main-card-initial, 'width') * $small-coef
+    );
+}
 
-$second-card: (
-    'height': map-get($second-card-initial, 'height') * $small-coef,
-    'width': map-get($second-card-initial, 'width') * $small-coef,
-    'offset': map-get($second-card-initial, 'offset') * $small-coef
-);
+@function getSecondCard($small-coef) {
+    @return (
+        'height': map-get($second-card-initial, 'height') * $small-coef,
+        'width': map-get($second-card-initial, 'width') * $small-coef,
+        'offset': map-get($second-card-initial, 'offset') * $small-coef
+    );
+}
 
-$third-card: (
-    'height': map-get($third-card-initial, 'height') * $small-coef,
-    'width': map-get($third-card-initial, 'width') * $small-coef,
-    'offset': map-get($third-card-initial, 'offset') * $small-coef
-);
+@function getSecondCard($small-coef) {
+    @return (
+        'height': map-get($second-card-initial, 'height') * $small-coef,
+        'width': map-get($second-card-initial, 'width') * $small-coef,
+        'offset': map-get($second-card-initial, 'offset') * $small-coef
+    );
+}
 
-$fourth-card: (
-    'height': map-get($fourth-card-initial, 'height') * $small-coef,
-    'width': map-get($fourth-card-initial, 'width') * $small-coef,
-    'offset': map-get($fourth-card-initial, 'offset') * $small-coef
-);
+@function getThirdCard($small-coef) {
+    @return (
+        'height': map-get($third-card-initial, 'height') * $small-coef,
+        'width': map-get($third-card-initial, 'width') * $small-coef,
+        'offset': map-get($third-card-initial, 'offset') * $small-coef
+    );
+}
+
+@function getFourthCard($small-coef) {
+    @return (
+        'height': map-get($fourth-card-initial, 'height') * $small-coef,
+        'width': map-get($fourth-card-initial, 'width') * $small-coef,
+        'offset': map-get($fourth-card-initial, 'offset') * $small-coef
+    );
+}
 
 $cover-card-gradient: (
     'from': #1b1c25,
@@ -54,8 +70,8 @@ $cover-card-gradient: (
 
 $transition-time: 300ms;
 
-@mixin card-factory($index) {
-    $main-card-width: map-get($main-card, 'width');
+@mixin card-factory($index, $small-coef) {
+    $main-card-width: map-get(getMainCard($small-coef), 'width');
 
     transition: all $transition-time ease;
     transition-property: height, width, left, top, transform, z-index, filter;
@@ -115,9 +131,9 @@ $transition-time: 300ms;
         }
     } @else {
         @if $index == 1 or $index == 7 { 
-            $height: map-get($fourth-card, $key: 'height');
-            $width: map-get($fourth-card, $key: 'width');
-            $offset: map-get($fourth-card, $key: 'offset');
+            $height: map-get(getFourthCard($small-coef), $key: 'height');
+            $width: map-get(getFourthCard($small-coef), $key: 'width');
+            $offset: map-get(getFourthCard($small-coef), $key: 'offset');
 
             $multiply-coef: if($index == 7, 1, -1);
 
@@ -148,9 +164,9 @@ $transition-time: 300ms;
         }
 
         @if $index == 2 or $index == 6 {  
-            $height: map-get($third-card, $key: 'height');
-            $width: map-get($third-card, $key: 'width');
-            $offset: map-get($third-card, $key: 'offset');
+            $height: map-get(getThirdCard($small-coef), $key: 'height');
+            $width: map-get(getThirdCard($small-coef), $key: 'width');
+            $offset: map-get(getThirdCard($small-coef), $key: 'offset');
 
             height: $height;
             width: $width;
@@ -181,9 +197,9 @@ $transition-time: 300ms;
         }
 
         @if $index == 3 or $index == 5 {   
-            $height: map-get($second-card, $key: 'height');
-            $width: map-get($second-card, $key: 'width');
-            $offset: map-get($second-card, $key: 'offset');
+            $height: map-get(getSecondCard($small-coef), $key: 'height');
+            $width: map-get(getSecondCard($small-coef), $key: 'width');
+            $offset: map-get(getSecondCard($small-coef), $key: 'offset');
 
             height: $height;
             width: $width;
@@ -220,7 +236,7 @@ $transition-time: 300ms;
         }
 
         @if $index == 4 {
-            $height: map-get($map: $main-card, $key: 'height');
+            $height: map-get($map: getMainCard($small-coef), $key: 'height');
 
             height: $height;
             width: $main-card-width;
@@ -247,20 +263,35 @@ $transition-time: 300ms;
     }
 }
 
+@mixin useSizeWithCoef($coef) {
+    &[attr-type=left-outer] { @include card-factory(0, $coef); }
+    &[attr-type=left-fourth] { @include card-factory(1, $coef); }
+    &[attr-type=left-third] { @include card-factory(2, $coef); }
+    &[attr-type=left-second] { @include card-factory(3, $coef); }
+    &[attr-type=main] { @include card-factory(4, $coef); }
+    &[attr-type=right-second] { @include card-factory(5, $coef); }
+    &[attr-type=right-third] { @include card-factory(6, $coef); }
+    &[attr-type=right-fourth] { @include card-factory(7, $coef); }
+    &[attr-type=right-outer] { @include card-factory(8, $coef); }
+}
+
+@mixin useSize($maxWidthScreen, $coef) {
+    @media screen and (max-width: #{$maxWidthScreen + px}) {
+        @include useSizeWithCoef($coef);
+    }
+}
+
 .card {
 
     position: absolute;
 
-
-    &[attr-type=left-outer] { @include card-factory(0); }
-    &[attr-type=left-fourth] { @include card-factory(1); }
-    &[attr-type=left-third] { @include card-factory(2); }
-    &[attr-type=left-second] { @include card-factory(3); }
-    &[attr-type=main] { @include card-factory(4); }
-    &[attr-type=right-second] { @include card-factory(5); }
-    &[attr-type=right-third] { @include card-factory(6); }
-    &[attr-type=right-fourth] { @include card-factory(7); }
-    &[attr-type=right-outer] { @include card-factory(8); }
+    @include useSizeWithCoef(1);
+    @include useSize(1366, 0.7);
+    @include useSize(1024, 0.67);
+    @include useSize(768, 0.68);
+    @include useSize(500, 0.42);
+    @include useSize(372, 0.42);
+    
 
     display: flex;
     justify-content: center;
