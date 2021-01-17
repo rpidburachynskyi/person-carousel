@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Carousel from "./Carousel";
 import { CardType, LayerTypeEnums } from "./types";
 
@@ -9,6 +9,7 @@ import HiddenCardBack from "./images/hidden/card.png";
 import HiddenPerson from "./images/hidden/person.png";
 import HiddenFront from "./images/hidden/front.png";
 import HiddenBack from "./images/hidden/back.png";
+import ToolPanel from "./ToolPanel";
 
 const createCard: (index: number) => CardType = (index: number) => {
 	if (Math.random() > 0.5) {
@@ -54,13 +55,18 @@ const createCard: (index: number) => CardType = (index: number) => {
 };
 
 function App() {
-	const cards: CardType[] = Array.from({
-		length: 150,
-	}).map((_, index) => createCard(index));
+	const [cards, setCards] = useState(
+		Array.from({
+			length: 150,
+		}).map((_, index) => createCard(index))
+	);
+
+	const [slowly, setSlowly] = useState(false);
 
 	return (
 		<div>
-			<Carousel cards={cards} />
+			<ToolPanel slowly={slowly} setSlowly={setSlowly} />
+			<Carousel slowly={slowly} cards={cards} />
 		</div>
 	);
 }

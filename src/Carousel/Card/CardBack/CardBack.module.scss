@@ -16,6 +16,12 @@
             filter: saturate(0%);
         }
 
+        &[attr-slowly=true] {
+            & .cardImage {
+                transition-duration: 3s;
+            }
+        }
+
         &::after {
             opacity: 0.9;
         }
@@ -36,6 +42,12 @@
         z-index: 10000;
 
         transition: opacity $default-transition-duration ease;
+    }
+
+    &[attr-slowly=true] {
+        &::after {
+            transition-duration: 3s;
+        }
     }
 }
 

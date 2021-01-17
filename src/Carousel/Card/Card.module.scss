@@ -296,12 +296,6 @@ $cover-card-gradient: (
         height: 25.61%;
         transform: perspective(19px) rotateX(2deg) translate(-10%, 110%) skewX(0deg);
     }
-
-    & .cardBack {
-        &::after {
-            opacity: 0;
-        }
-    }
 }
 
 
@@ -348,9 +342,11 @@ $cover-card-gradient: (
 }
 
 .card {
-
-
     $transition-duration: $default-transition-duration;
 
     @include useSizesWithConfig($transition-duration);
+    
+    &[attr-slowly=true] {
+        @include useSizesWithConfig(3s);
+    }
 }

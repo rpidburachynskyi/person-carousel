@@ -5,6 +5,10 @@
 
     &[attr-type=other] {        
         animation: fade 1300ms ease-in-out;
+
+        &[attr-slowly=true] {
+            animation-duration: 4s;
+        }
     }
 
     &[attr-visibility=slice] {

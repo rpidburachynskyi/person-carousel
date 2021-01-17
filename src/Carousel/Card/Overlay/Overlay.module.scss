@@ -33,6 +33,10 @@
 
     transition: $default-transition-duration filter, top linear;
 
+    &[attr-slowly=true] {
+        transition-duration: 3s;
+    }
+
     &[attr-visibility=slice] {
         width: 36.96%;
         height: 93.58%;

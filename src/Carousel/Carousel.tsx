@@ -30,10 +30,12 @@ const sliceCards = (cards: CardType[], currentIndex: number) => {
 };
 
 interface Props {
+	slowly: boolean;
+	
 	cards: CardType[];
 }
 
-const Carousel = ({ cards }: Props) => {
+const Carousel = ({ cards, slowly }: Props) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 
 	const viewCards = sliceCards(cards, currentIndex);
@@ -63,6 +65,7 @@ const Carousel = ({ cards }: Props) => {
 					{viewCards.map((viewCard) => {
 						return (
 							<CardComponent
+								slowly={slowly}
 								key={viewCard.id}
 								card={viewCard}
 								type={getTypeByIndexes(

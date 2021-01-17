@@ -6,21 +6,37 @@ import { CardType, CardTypesEnum } from "../../types";
 import CardBack from "./CardBack";
 
 interface Props {
+	slowly: boolean;
+
 	type: CardTypesEnum;
 	card: CardType;
 
 	onMoveTo: () => void;
 }
 
-const Card = ({ type, card, onMoveTo }: Props) => {
+const Card = ({ slowly, type, card, onMoveTo }: Props) => {
 	const layers = card.layers.map((layer) => (
-		<Layer layer={layer} visibility={type !== "main" ? "slice" : "full"} />
+		<Layer
+			layer={layer}
+			visibility={type !== "main" ? "slice" : "full"}
+			slowly={slowly}
+		/>
 	));
 
 	return (
-		<div attr-type={type} onClick={onMoveTo} className={classes.card}>
-			<CardBack type={type} cardBack={card.cardBack} />
-			<Overlay type={type} layers={layers} isMain={type === "main"} />
+		<div
+			attr-slowly={String(slowly)}
+			attr-type={type}
+			onClick={onMoveTo}
+			className={classes.card}
+		>
+			<CardBack type={type} cardBack={card.cardBack} slowly={slowly} />
+			<Overlay
+				slowly={slowly}
+				type={type}
+				layers={layers}
+				isMain={type === "main"}
+			/>
 		</div>
 	);
 };

@@ -5,6 +5,8 @@ import classes from "./Overlay.module.scss";
 import { LayerProps } from "../Layer/Layer";
 
 interface Props {
+	slowly: boolean;
+
 	type: string;
 
 	layers: ReactElement<LayerProps>[];
@@ -12,7 +14,7 @@ interface Props {
 	isMain: boolean;
 }
 
-const Overlay = ({ type, layers, isMain }: Props) => {
+const Overlay = ({ slowly, type, layers, isMain }: Props) => {
 	const personLayer = layers.find(
 		(l) => l.props.layer.type === LayerTypeEnums.PERSON
 	);
@@ -36,6 +38,7 @@ const Overlay = ({ type, layers, isMain }: Props) => {
 				attr-type={type}
 				attr-visibility={!isMain ? "slice" : "full"}
 				attr-blur={String(!isMain)}
+				attr-slowly={String(slowly)}
 			>
 				{_layers}
 			</div>
