@@ -317,7 +317,7 @@ $cover-card-gradient: (
 
     transform: perspective(0)  rotateY(0);
 
-    z-index: 5;
+    z-index: 15;
     filter: blur(0);
 
     &::before {
