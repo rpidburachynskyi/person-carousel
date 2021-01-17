@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "./Carousel";
 import { CardType, LayerTypeEnums } from "./types";
 
@@ -11,33 +11,34 @@ import HiddenFront from "./images/hidden/front.png";
 import HiddenBack from "./images/hidden/back.png";
 import ToolPanel from "./ToolPanel";
 
-const createCard: (index: number) => CardType = (index: number) => {
-	if (Math.random() > 0.5) {
-		return {
-			id: `${index}`,
-			index: index,
-			cardBack: {
-				src: HiddenCardBack,
+const createHiddenPersonCard = (index: number) => {
+	return {
+		id: `${index}`,
+		index: index,
+		cardBack: {
+			src: HiddenCardBack,
+		},
+		layers: [
+			{
+				index: 1,
+				type: LayerTypeEnums.OTHER,
+				src: HiddenBack,
 			},
-			layers: [
-				{
-					index: 1,
-					type: LayerTypeEnums.OTHER,
-					src: HiddenBack,
-				},
-				{
-					index: 2,
-					type: LayerTypeEnums.PERSON,
-					src: HiddenPerson,
-				},
-				{
-					index: 3,
-					type: LayerTypeEnums.OTHER,
-					src: HiddenFront,
-				},
-			],
-		};
-	}
+			{
+				index: 2,
+				type: LayerTypeEnums.PERSON,
+				src: HiddenPerson,
+			},
+			{
+				index: 3,
+				type: LayerTypeEnums.OTHER,
+				src: HiddenFront,
+			},
+		],
+	};
+};
+
+const createExampleCard = (index: number) => {
 	return {
 		id: `${index}`,
 		index: index,
@@ -54,18 +55,47 @@ const createCard: (index: number) => CardType = (index: number) => {
 	};
 };
 
+const createCard = (index: number) => {
+	if (Math.random() > 0.5) {
+		return createHiddenPersonCard(index);
+	}
+	return createExampleCard(index);
+};
+
+const createCards = (
+	count: number,
+	{ onlyHiddenPersonCard = false }: { onlyHiddenPersonCard?: boolean }
+) => {
+	return Array.from({
+		length: count,
+	}).map((_, index) => {
+		if (onlyHiddenPersonCard) return createHiddenPersonCard(index);
+
+		return createCard(index);
+	});
+};
+
 function App() {
+	const [slowly, setSlowly] = useState(false);
+	const [onlyHiddenPersonCard, setOnlyHiddenPersonCard] = useState(false);
+
 	const [cards, setCards] = useState(
-		Array.from({
-			length: 150,
-		}).map((_, index) => createCard(index))
+		createCards(150, { onlyHiddenPersonCard })
 	);
 
-	const [slowly, setSlowly] = useState(false);
+	useEffect(() => {
+		setCards(createCards(150, { onlyHiddenPersonCard }));
+		setCards(createCards(150, { onlyHiddenPersonCard }));
+	}, [onlyHiddenPersonCard]);
 
 	return (
 		<div>
-			<ToolPanel slowly={slowly} setSlowly={setSlowly} />
+			<ToolPanel
+				slowly={slowly}
+				setSlowly={setSlowly}
+				onlyHiddenPersonCard={onlyHiddenPersonCard}
+				setOnlyHiddenPersonCard={setOnlyHiddenPersonCard}
+			/>
 			<Carousel slowly={slowly} cards={cards} />
 		</div>
 	);
