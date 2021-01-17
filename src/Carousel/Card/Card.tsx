@@ -3,6 +3,7 @@ import Overlay from "./Overlay";
 
 import Layer from "./Layer";
 import { CardType, CardTypesEnum } from "../../types";
+import CardBack from "./CardBack";
 
 interface Props {
 	type: CardTypesEnum;
@@ -18,6 +19,7 @@ const Card = ({ type, card, onMoveTo }: Props) => {
 
 	return (
 		<div attr-type={type} onClick={onMoveTo} className={classes.card}>
+			<CardBack type={type} cardBack={card.cardBack} />
 			<Overlay type={type} layers={layers} isMain={type === "main"} />
 		</div>
 	);

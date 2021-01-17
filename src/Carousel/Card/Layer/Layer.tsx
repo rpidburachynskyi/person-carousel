@@ -1,13 +1,13 @@
 import { LayerType } from "../../../types";
 import classes from "./Layer.module.scss";
 
-interface Props {
+export interface LayerProps {
 	layer: LayerType;
 
 	visibility: string;
 }
 
-const Layer = ({ layer, visibility }: Props) => {
+const Layer = ({ layer, visibility }: LayerProps) => {
 	return (
 		<img
 			className={classes.layer}

@@ -3,7 +3,7 @@ export enum LayerTypeEnums {
 	OTHER = "other",
 }
 
-export type CardBack = {
+export type CardBackType = {
 	src: string;
 };
 
@@ -16,7 +16,9 @@ export type LayerType = {
 export type CardType = {
 	id: string;
 
-	cardBack: CardBack;
+	index: number;
+
+	cardBack: CardBackType;
 	layers: LayerType[];
 };
 

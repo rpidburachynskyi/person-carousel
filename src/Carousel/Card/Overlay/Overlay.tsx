@@ -1,18 +1,24 @@
-import { cloneElement, ReactElement } from "react";
+import { ReactElement } from "react";
+import { LayerTypeEnums } from "../../../types";
 import classes from "./Overlay.module.scss";
+
+import { LayerProps } from "../Layer/Layer";
 
 interface Props {
 	type: string;
 
-	layers: ReactElement<{ type: string; index: number }>[];
+	layers: ReactElement<LayerProps>[];
 
 	isMain: boolean;
 }
 
 const Overlay = ({ type, layers, isMain }: Props) => {
-	const card = layers.find((l) => l.props.type === "card");
-	const personLayer = layers.find((l) => l.props.type === "person");
-	const otherLayers = layers.filter((l) => l.props.type === "other");
+	const personLayer = layers.find(
+		(l) => l.props.layer.type === LayerTypeEnums.PERSON
+	);
+	const otherLayers = layers.filter(
+		(l) => l.props.layer.type === LayerTypeEnums.OTHER
+	);
 
 	const _layers = (() => {
 		if (isMain)
@@ -25,7 +31,6 @@ const Overlay = ({ type, layers, isMain }: Props) => {
 
 	return (
 		<div className={classes.overlay}>
-			{card}
 			<div
 				className={classes.layers}
 				attr-type={type}

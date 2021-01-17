@@ -1,9 +1,9 @@
-import { CardBack, CardTypesEnum } from "../../../types";
+import { CardBackType, CardTypesEnum } from "../../../types";
 import classes from "./CardBack.module.scss";
 
 interface Props {
 	type: CardTypesEnum;
-	cardBack: CardBack;
+	cardBack: CardBackType;
 }
 
 const CardBack = ({ type, cardBack }: Props) => {

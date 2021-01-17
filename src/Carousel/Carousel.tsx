@@ -60,16 +60,16 @@ const Carousel = ({ cards }: Props) => {
 			<div className={classes.back}></div>
 			<div className={classes.carousel}>
 				<div className={classes.slider} {...handlers}>
-					{viewCards.map((viewCard, viewCardIndex) => {
+					{viewCards.map((viewCard) => {
 						return (
 							<CardComponent
 								key={viewCard.id}
 								card={viewCard}
 								type={getTypeByIndexes(
-									viewCardIndex,
+									viewCard.index,
 									currentIndex
 								)}
-								onMoveTo={() => turnTo(viewCardIndex)}
+								onMoveTo={() => turnTo(viewCard.index)}
 							/>
 						);
 					})}
