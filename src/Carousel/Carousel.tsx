@@ -7,45 +7,59 @@ import classes from "./Carousel.module.scss";
 import back from "../Untitled-3.png";
 import Overlay from "./Card/Overlay";
 
+const getTypeByIndexes = (currentCardIndex: number, index: number) => {
+	if (currentCardIndex <= index - 4) return "left-outer";
+	if (currentCardIndex === index - 3) return "left-fourth";
+	if (currentCardIndex === index - 2) return "left-third";
+	if (currentCardIndex === index - 1) return "left-second";
+	if (currentCardIndex === index) return "main";
+	if (currentCardIndex === index + 1) return "right-second";
+	if (currentCardIndex === index + 2) return "right-third";
+	if (currentCardIndex === index + 3) return "right-fourth";
+
+	return "right-outer";
+};
+
+const sliceCards = (cards: number[], currentIndex: number) => {
+	return cards.filter(
+		(c, i) => i >= currentIndex - 6 && i <= currentIndex + 6
+	);
+};
+
 const Carousel = () => {
-	const [index, setIndex] = useState(0);
+	const [currentIndex, setCurrentIndex] = useState(0);
 	const [cards] = useState(Array.from({ length: 130 }).map((c, i) => i));
 
-	const viewCards = cards
-		.filter((c, i) => i >= index - 15)
-		.filter((c, i) => i <= 50);
+	const viewCards = sliceCards(cards, currentIndex);
+
+	const turnTo = (nextIndex: number) => {
+		if (nextIndex < 0) return 0;
+		if (nextIndex >= cards.length) return cards.length - 1;
+
+		setCurrentIndex(nextIndex);
+	};
+
+	const onTurnLeft = () => turnTo(currentIndex - 1);
+	const onTurnRight = () => turnTo(currentIndex + 1);
 
 	const handlers = useSwipeable({
-		onSwipedLeft: () => setIndex((index) => index + 1),
-		onSwipedRight: () => setIndex((index) => index - 1),
+		onSwipedLeft: onTurnRight,
+		onSwipedRight: onTurnLeft,
 		preventDefaultTouchmoveEvent: true,
 		trackMouse: true,
 	});
 
 	return (
 		<div className={classes.page}>
-			<div
-				className={classes.back}
-				// style={{ background: `url(${back})` }}
-			></div>
+			<div className={classes.back}></div>
 			<div className={classes.carousel}>
 				<div className={classes.slider} {...handlers}>
 					{viewCards.map((c, i) => {
-						let type: CardType;
-						if (c <= index - 4) type = "left-outer";
-						else if (c === index - 3) type = "left-fourth";
-						else if (c === index - 2) type = "left-third";
-						else if (c === index - 1) type = "left-second";
-						else if (c === index) type = "main";
-						else if (c === index + 1) type = "right-second";
-						else if (c === index + 2) type = "right-third";
-						else if (c === index + 3) type = "right-fourth";
-						else type = "right-outer";
 						return (
 							<Card
 								key={c}
-								type={type}
-								onMoveTo={() => setIndex(c)}
+								type={getTypeByIndexes(c, currentIndex)}
+								onMoveTo={() => turnTo(c)}
 							/>
 						);
 					})}
