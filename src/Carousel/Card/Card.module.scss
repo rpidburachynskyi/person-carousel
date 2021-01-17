@@ -21,8 +21,6 @@ $fourth-card-initial: (
     'offset': 340px
 );
 
-$small-coef: 1;
-
 @function getMainCard($small-coef) {
     @return (
         'height': map-get($main-card-initial, 'height') * $small-coef,
@@ -70,12 +68,7 @@ $cover-card-gradient: (
 
 $transition-time: 300ms;
 
-@mixin card-factory($index, $small-coef) {
-    $main-card-width: map-get(getMainCard($small-coef), 'width');
-
-    transition: all $transition-time ease;
-    transition-property: height, width, left, top, transform, z-index, filter;
-
+@mixin shadowForCardFactory($transition-time) {
     &::before {
         content: '';
         width: 100%;
@@ -89,6 +82,226 @@ $transition-time: 300ms;
 
         transition: all $transition-time ease;
     }
+}
+
+@mixin outerCardFactory ($isLeftOuterCard, $small-coef) {
+    $main-card-width: map-get(getMainCard($small-coef), 'width');
+
+    height: 0;
+    width: 0;
+
+    $multiply-coef: if($isLeftOuterCard, -1, 1);
+
+    top: calc(50%);
+    @if $isLeftOuterCard { 
+        left: calc(50% - (#{$main-card-width} / 2) - 430px);
+
+        transform: perspective(100px)  rotateY(-1deg);
+    } @else {    
+        left: calc(50% + (#{$main-card-width} / 2) + 430px);
+
+        transform: perspective(100px) rotateY(0);
+    }
+
+    filter: blur(7px);
+    
+    z-index: 1;
+    
+
+    &::before {
+        height: 0;
+        transform:perspective(19px) rotateX(2deg) translate($multiply-coef * 0px, 0px) skewX($multiply-coef * 45deg);
+    } 
+}
+
+@mixin leftOuterCardFactory ($small-coef, $transition-time) {
+    @include shadowForCardFactory($transition-time);
+    @include outerCardFactory(true, $small-coef);
+}
+
+@mixin rightOuterCardFactory ($small-coef, $transition-time) {
+    @include shadowForCardFactory($transition-time);
+    @include outerCardFactory(false, $small-coef);
+}
+
+@mixin fourthCardFactory($isLeftCard, $small-coef) {
+    $main-card-width: map-get(getMainCard($small-coef), 'width');
+
+    $height: getFourthCard($small-coef, 'height'), $key: 'height');
+    $width: map-get(getFourthCard($small-coef), $key: 'width');
+    $offset: map-get(getFourthCard($small-coef), $key: 'offset');
+
+    $multiply-coef: if($isLeftCard, -1, 1);
+
+    height: $height;
+    width: $width;
+
+    top: calc(50% - #{$height / 2});
+
+    @if($isLeftCard) {         
+        left: calc(50% - (#{$main-card-width} / 2) - #{$offset + 20px});
+
+        transform: perspective(12px) rotateY(-1deg);
+    }
+    @else {
+        left: calc(50% + (#{$main-card-width} / 2) + #{$offset - $width + 30px});
+
+        transform: perspective(12px) rotateY(1deg);
+    }
+
+    filter: blur(5px);
+
+    z-index: 2;
+
+    &::before {
+        height: 40%;
+        transform: perspective(19px) rotateX(1deg) translate($multiply-coef * 56%, 118%) skewX($multiply-coef * 45deg);
+    }
+}
+
+@mixin leftFourthCardFactory($small-coef,  $transition-time) {
+    @include shadowForCardFactory($transition-time);
+    @include fourthCardFactory(true, $small-coef);
+}
+
+@mixin rightFourthCardFactory($small-coef,  $transition-time) {
+    @include shadowForCardFactory($transition-time);
+    @include fourthCardFactory(false, $small-coef);
+}
+
+@mixin thirdCardFactory($isLeft, $small-coef) {
+    $main-card-width: map-get(getMainCard($small-coef), 'width');
+
+    $height: map-get(getThirdCard($small-coef), $key: 'height');
+    $width: map-get(getThirdCard($small-coef), $key: 'width');
+    $offset: map-get(getThirdCard($small-coef), $key: 'offset');
+
+    height: $height;
+    width: $width;
+
+    $multiply-coef: if($isLeft, -1, 1);
+
+    top: calc(50% - #{$height / 2});
+
+    @if($isLeft) {         
+        left: calc(50% - (#{$main-card-width} / 2) - #{$offset + 20px});
+
+        transform: perspective(15px)  rotateY(-1deg);
+    }
+    @else {
+        left: calc(50% + (#{$main-card-width} / 2) + #{$offset - $width + 30px});
+
+        transform: perspective(15px) rotateY(1deg);
+    }
+
+    filter: blur(4px);
+        
+    z-index: 3;
+
+    &::before {
+        content: '';
+        width: 80%;
+        height: 35%;
+        transform: perspective(19px) rotateX(2deg) translate($multiply-coef * 63%, 120%) skewX($multiply-coef * 45deg)
+    }
+}
+
+@mixin leftThirdCardFactory($small-coef,  $transition-time) {
+    @include shadowForCardFactory($transition-time);
+    @include thirdCardFactory(true, $small-coef);
+}
+
+@mixin rightThirdCardFactory($small-coef,  $transition-time) {
+    @include shadowForCardFactory($transition-time);
+    @include thirdCardFactory(false, $small-coef);
+}
+
+@mixin secondCardFactory($isLeft, $small-coef) {
+    $main-card-width: map-get(getMainCard($small-coef), 'width');
+
+    $height: map-get(getSecondCard($small-coef), $key: 'height');
+    $width: map-get(getSecondCard($small-coef), $key: 'width');
+    $offset: map-get(getSecondCard($small-coef), $key: 'offset');
+
+    height: $height;
+    width: $width;
+
+    $multiply-coef: if($isLeft, -1, 1);
+
+    top: calc(50% - #{$height / 2});
+
+    @if $isLeft {
+        left: calc(50% - (#{$main-card-width} / 2) - #{$offset});
+        transform: perspective(25px) rotateY(#{-1 + deg});
+    }
+    @else {
+        left: calc(50% + (#{$main-card-width} / 2) - #{$offset});
+        transform: perspective(25px) rotateY(#{1 + deg});
+    }
+    
+
+    filter: blur(3px);
+    
+    z-index: 4;
+
+    &::before {
+        content: '';
+        height: 38%;
+        width: 50%;
+        /// 237
+        @if($isLeft) {
+            transform: perspective(19px) rotateX(2deg) translate($multiply-coef * 151%, 111%) skewX($multiply-coef * 45deg)
+        } @else {
+            transform: perspective(19px) rotateX(2deg) translate(#{$multiply-coef * 75%}, 111%) skewX($multiply-coef * 45deg);
+        }
+    }
+}
+
+@mixin leftSecondCardFactory($small-coef,  $transition-time) {
+    @include shadowForCardFactory($transition-time);
+    @include secondCardFactory(true, $small-coef);
+}
+
+@mixin rightSecondCardFactory($small-coef,  $transition-time) {
+    @include shadowForCardFactory($transition-time);
+    @include secondCardFactory(false, $small-coef);
+}
+
+@mixin centralCardFactory($small-coef, $transition-time) {
+    @include shadowForCardFactory($transition-time);
+
+    $main-card-width: map-get(getMainCard($small-coef), 'width');
+    $height: map-get($map: getMainCard($small-coef), $key: 'height');
+
+    height: $height;
+    width: $main-card-width;
+
+
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - (#{$main-card-width} / 2));
+
+    transform: perspective(0)  rotateY(0);
+
+    z-index: 5;
+    filter: blur(0);
+
+    &::before {
+        width: 80%;
+        height: 25.61%;
+        transform: perspective(19px) rotateX(2deg) translate(-10%, 110%) skewX(0deg);
+    }
+
+    &::after {
+        opacity: 0;
+    }
+}
+
+
+@mixin card-factory($index, $small-coef) {
+    $main-card-width: map-get(getMainCard($small-coef), 'width');
+
+    transition: all $transition-time ease;
+    transition-property: height, width, left, top, transform, z-index, filter;
 
     &::after {
         content:'';
@@ -131,137 +344,34 @@ $transition-time: 300ms;
             height: 0;
             transform:perspective(19px) rotateX(2deg) translate($multiply-coef * 0px, 0px) skewX($multiply-coef * 45deg);
         }
+
     } @else {
         @if $index == 1 or $index == 7 { 
-            $height: map-get(getFourthCard($small-coef), $key: 'height');
-            $width: map-get(getFourthCard($small-coef), $key: 'width');
-            $offset: map-get(getFourthCard($small-coef), $key: 'offset');
-
-            $multiply-coef: if($index == 7, 1, -1);
-
-            height: $height;
-            width: $width;
-
-            top: calc(50% - #{$height / 2});
-    
-            @if($index == 1) {         
-                left: calc(50% - (#{$main-card-width} / 2) - #{$offset + 20px});
-        
-                transform: perspective(12px) rotateY(-1deg);
-            }
-            @else {
-                left: calc(50% + (#{$main-card-width} / 2) + #{$offset - $width + 30px});
-        
-                transform: perspective(12px) rotateY(1deg);
-            }
-
-            filter: blur(5px);
-
-            z-index: 2;
-
-            &::before {
-                height: 40%;
-                transform: perspective(19px) rotateX(1deg) translate($multiply-coef * 56%, 118%) skewX($multiply-coef * 45deg);
+            @if $index == 1 {
+                @include leftFourthCardFactory($small-coef, $transition-time);
+            } @else {
+                @include rightFourthCardFactory($small-coef, $transition-time);
             }
         }
 
         @if $index == 2 or $index == 6 {  
-            $height: map-get(getThirdCard($small-coef), $key: 'height');
-            $width: map-get(getThirdCard($small-coef), $key: 'width');
-            $offset: map-get(getThirdCard($small-coef), $key: 'offset');
-
-            height: $height;
-            width: $width;
-
-            $multiply-coef: if($index == 6, 1, -1);
-
-            top: calc(50% - #{$height / 2});
-
-            @if($index == 2) {         
-                left: calc(50% - (#{$main-card-width} / 2) - #{$offset + 20px});
-
-                transform: perspective(15px)  rotateY(-1deg);
-            }
-            @else {
-                left: calc(50% + (#{$main-card-width} / 2) + #{$offset - $width + 30px});
-        
-                transform: perspective(15px) rotateY(1deg);
-            }
-
-            filter: blur(4px);
-                
-            z-index: 3;
-
-            &::before {
-                content: '';
-                width: 80%;
-                height: 35%;
-                transform: perspective(19px) rotateX(2deg) translate($multiply-coef * 63%, 120%) skewX($multiply-coef * 45deg)
+            @if $index == 2 {
+                @include leftThirdCardFactory($small-coef, $transition-time);
+            } @else {
+                @include rightThirdCardFactory($small-coef, $transition-time);
             }
         }
 
         @if $index == 3 or $index == 5 {   
-            $height: map-get(getSecondCard($small-coef), $key: 'height');
-            $width: map-get(getSecondCard($small-coef), $key: 'width');
-            $offset: map-get(getSecondCard($small-coef), $key: 'offset');
-
-            height: $height;
-            width: $width;
-
-            $multiply-coef: if($index == 5, 1, -1);
-
-            top: calc(50% - #{$height / 2});
-
-            @if($index == 3) {
-                left: calc(50% - (#{$main-card-width} / 2) - #{$offset});
-            }
-            @else {
-                left: calc(50% + (#{$main-card-width} / 2) - #{$offset});
-            }
-            
-            transform: perspective(25px) rotateY(#{-4 + $index + deg});
-
-            filter: blur(3px);
-            
-            z-index: 4;
-
-            &::before {
-                content: '';
-                height: 38%;
-                width: 50%;
-                /// 237
-                @if($index == 3) {
-                    transform: perspective(19px) rotateX(2deg) translate($multiply-coef * 151%, 111%) skewX($multiply-coef * 45deg)
-                } @else {
-                    transform: perspective(19px) rotateX(2deg) translate(#{$multiply-coef * 75%}, 111%) skewX($multiply-coef * 45deg);
-                }
+            @if $index == 3 {
+                @include leftSecondCardFactory($small-coef, $transition-time);
+            } @else {
+                @include rightSecondCardFactory($small-coef, $transition-time);
             }
         }
 
         @if $index == 4 {
-            $height: map-get($map: getMainCard($small-coef), $key: 'height');
-
-            height: $height;
-            width: $main-card-width;
-
-
-            top: calc(50% - #{$height / 2});
-            left: calc(50% - (#{$main-card-width} / 2));
-    
-            transform: perspective(0)  rotateY(0);
-
-            z-index: 5;
-            filter: blur(0);
-
-            &::before {
-                width: 80%;
-                height: 25.61%;
-                transform: perspective(19px) rotateX(2deg) translate(-10%, 110%) skewX(0deg);
-            }
-
-            &::after {
-                opacity: 0;
-            }
+            @include centralCardFactory($small-coef, $transition-time)
         }
 
     }
