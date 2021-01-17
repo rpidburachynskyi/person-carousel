@@ -43,8 +43,8 @@ const Carousel = () => {
 						else type = "right-outer";
 						return (
 							<Card
-								type={type}
 								key={c}
+								type={type}
 								onMoveTo={() => setIndex(c)}
 							/>
 						);

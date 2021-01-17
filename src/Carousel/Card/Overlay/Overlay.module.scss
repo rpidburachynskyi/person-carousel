@@ -1,3 +1,5 @@
+@import '../../config.scss';
+
 .overlay {
     height: 107%; // 106.068%;
     width: 274.5%; // 270.5%;
@@ -13,6 +15,8 @@
     display: flex;
     justify-content: center;
 
+    
+
 }
 
 .layers {
@@ -24,7 +28,10 @@
 
     position: absolute;
 
-    transition: 300ms width, height, top linear;
+
+    filter: saturate(100%);
+
+    transition: $default-transition-duration filter, top linear;
 
     &[attr-visibility=slice] {
         width: 36.96%;
@@ -32,5 +39,9 @@
         overflow: hidden;
 
         top: 6.6%;
+    }
+
+    &[attr-blur=true] {
+        filter: saturate(0%);
     }
 }

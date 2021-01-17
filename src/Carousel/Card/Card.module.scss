@@ -1,3 +1,5 @@
+@import '../config.scss';
+
 $leftOuterType: "left-outer";
 $leftFourthType: "left-fourth";
 $leftThirdType: "left-third";
@@ -54,19 +56,22 @@ $cover-card-gradient: (
 );
 
 @mixin gradientOverhead($transition-duration) {
-    &::after {
-        content:'';
-        position:absolute;
-        left:0; top:0;
-        width:100%; height:100%;
-        display:inline-block;
-        background-image: linear-gradient(90deg, #1b1c25cc 0%,#505166cc 100%);
-
-        opacity: 1;
-
-        z-index: 10000;
-
-        transition: opacity $transition-duration ease;
+    & .cardBack {
+        &::after {
+            content:'';
+            position:absolute;
+            left:0; 
+            top:0;
+            width:100%; height:100%;
+            display:inline-block;
+            background-image: linear-gradient(90deg, #1b1c25ff 0%,#505166ff 100%);
+    
+            opacity: 0.9;
+    
+            z-index: 10000;
+    
+            transition: opacity $transition-duration ease;
+        }
     }
 }
 
@@ -115,7 +120,7 @@ $cover-card-gradient: (
         transform: perspective(100px) rotateY(0);
     }
 
-    filter: blur(7px);
+    filter: blur(4px);
     
     z-index: 1;
     
@@ -165,7 +170,7 @@ $cover-card-gradient: (
         transform: perspective(12px) rotateY(1deg);
     }
 
-    filter: blur(5px);
+    filter: blur(4px);
 
     z-index: 2;
 
@@ -214,7 +219,7 @@ $cover-card-gradient: (
         transform: perspective(15px) rotateY(1deg);
     }
 
-    filter: blur(4px);
+    filter: blur(2px);
         
     z-index: 3;
 
@@ -264,7 +269,7 @@ $cover-card-gradient: (
     }
     
 
-    filter: blur(3px);
+    filter: blur(1px);
     
     z-index: 4;
 
@@ -321,8 +326,10 @@ $cover-card-gradient: (
         transform: perspective(19px) rotateX(2deg) translate(-10%, 110%) skewX(0deg);
     }
 
-    &::after {
-        opacity: 0;
+    & .cardBack {
+        &::after {
+            opacity: 0;
+        }
     }
 }
 
@@ -372,9 +379,28 @@ $cover-card-gradient: (
 .card {
 
 
-    $transition-duration: 300ms;
+    $transition-duration: $default-transition-duration;
 
     @include useSizesWithConfig($transition-duration);
+}
+
+.cardBack {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    overflow: hidden;
+
+    &[attr-blur=true] {
+        & .cardImage {
+            filter: saturate(0%);
+        }
+    }
+
 }
 
 .cardImage {
@@ -385,4 +411,6 @@ $cover-card-gradient: (
 
     top: 0;
     left: 0;
+
+    transition: filter $default-transition-duration linear;
 }

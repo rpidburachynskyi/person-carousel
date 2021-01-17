@@ -46,10 +46,12 @@ const Card = ({ type, onMoveTo }: Props) => {
 
 	return (
 		<div attr-type={type} onClick={onMoveTo} className={classes.card}>
-			<img
-				src="https://i.pinimg.com/originals/83/f9/37/83f937b69f30bb886ab8a03390da6771.jpg"
-				className={classes.cardImage}
-			/>
+			<div
+				className={classes.cardBack}
+				attr-blur={String(type !== "main")}
+			>
+				<img src={BCardBack} className={classes.cardImage} />
+			</div>
 			<Overlay type={type} layers={layers} isMain={type === "main"} />
 		</div>
 	);

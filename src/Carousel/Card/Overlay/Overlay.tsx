@@ -24,13 +24,13 @@ const Overlay = ({ type, layers, isMain }: Props) => {
 	})();
 
 	return (
-		<div key={type} className={classes.overlay}>
+		<div className={classes.overlay}>
 			{card}
 			<div
 				className={classes.layers}
 				attr-type={type}
-				key={type}
 				attr-visibility={!isMain ? "slice" : "full"}
+				attr-blur={String(!isMain)}
 			>
 				{_layers}
 			</div>
