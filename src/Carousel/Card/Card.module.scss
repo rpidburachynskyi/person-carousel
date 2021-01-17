@@ -45,6 +45,23 @@ $cover-card-gradient: (
 
 $transition-time: 300ms;
 
+@mixin gradientOverhead($transition-time) {
+    &::after {
+        content:'';
+        position:absolute;
+        left:0; top:0;
+        width:100%; height:100%;
+        display:inline-block;
+        background-image: linear-gradient(90deg, #1b1c25cc 0%,#505166cc 100%);
+
+        opacity: 1;
+
+        z-index: 10000;
+
+        transition: opacity $transition-time ease;
+    }
+}
+
 @mixin shadowForCardFactory($transition-time) {
     &::before {
         content: '';
@@ -92,11 +109,13 @@ $transition-time: 300ms;
 }
 
 @mixin leftOuterCardFactory ($small-coef, $transition-time) {
+    @include gradientOverhead($transition-time);
     @include shadowForCardFactory($transition-time);
     @include outerCardFactory(true, $small-coef);
 }
 
 @mixin rightOuterCardFactory ($small-coef, $transition-time) {
+    @include gradientOverhead($transition-time);
     @include shadowForCardFactory($transition-time);
     @include outerCardFactory(false, $small-coef);
 }
@@ -137,11 +156,13 @@ $transition-time: 300ms;
 }
 
 @mixin leftFourthCardFactory($small-coef,  $transition-time) {
+    @include gradientOverhead($transition-time);
     @include shadowForCardFactory($transition-time);
     @include fourthCardFactory(true, $small-coef);
 }
 
 @mixin rightFourthCardFactory($small-coef,  $transition-time) {
+    @include gradientOverhead($transition-time);
     @include shadowForCardFactory($transition-time);
     @include fourthCardFactory(false, $small-coef);
 }
@@ -184,11 +205,13 @@ $transition-time: 300ms;
 }
 
 @mixin leftThirdCardFactory($small-coef,  $transition-time) {
+    @include gradientOverhead($transition-time);
     @include shadowForCardFactory($transition-time);
     @include thirdCardFactory(true, $small-coef);
 }
 
 @mixin rightThirdCardFactory($small-coef,  $transition-time) {
+    @include gradientOverhead($transition-time);
     @include shadowForCardFactory($transition-time);
     @include thirdCardFactory(false, $small-coef);
 }
@@ -235,11 +258,13 @@ $transition-time: 300ms;
 }
 
 @mixin leftSecondCardFactory($small-coef,  $transition-time) {
+    @include gradientOverhead($transition-time);
     @include shadowForCardFactory($transition-time);
     @include secondCardFactory(true, $small-coef);
 }
 
 @mixin rightSecondCardFactory($small-coef,  $transition-time) {
+    @include gradientOverhead($transition-time);
     @include shadowForCardFactory($transition-time);
     @include secondCardFactory(false, $small-coef);
 }
@@ -280,46 +305,11 @@ $transition-time: 300ms;
     transition: all $transition-time ease;
     transition-property: height, width, left, top, transform, z-index, filter;
 
-    &::after {
-        content:'';
-        position:absolute;
-        left:0; top:0;
-        width:100%; height:100%;
-        display:inline-block;
-        background-image: linear-gradient(90deg, #1b1c25cc 0%,#505166cc 100%);
-
-        opacity: 1;
-
-        z-index: 10000;
-
-        transition: opacity $transition-time ease;
-    }
-
     @if $index <= 0 or $index >= 8 {
-        height: 0;
-        width: 0;
-
-        $multiply-coef: if($index >= 8, 1, -1);
-
-        top: calc(50%);
-        @if $index <= 0 { 
-            left: calc(50% - (#{$main-card-width} / 2) - 430px);
-
-            transform: perspective(100px)  rotateY(-1deg);
-        } @else {    
-            left: calc(50% + (#{$main-card-width} / 2) + 430px);
-    
-            transform: perspective(100px) rotateY(0);
-        }
-
-        filter: blur(7px);
-        
-        z-index: 1;
-        
-
-        &::before {
-            height: 0;
-            transform:perspective(19px) rotateX(2deg) translate($multiply-coef * 0px, 0px) skewX($multiply-coef * 45deg);
+        @if $index <= 0 {
+            @include leftOuterCardFactory($small-coef, $transition-time);
+        } @else {
+            @include rightOuterCardFactory($small-coef, $transition-time);
         }
 
     } @else {
