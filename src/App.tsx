@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import classes from "./App.module.scss";
+
 import Carousel from "./Carousel";
-import { CardType, LayerTypeEnums } from "./types";
+import { LayerTypeEnums } from "./types";
 
 import CardBack from "./images/example/card.png";
 import RedBorder from "./images/example/red_border.png";
@@ -89,7 +91,7 @@ function App() {
 	}, [onlyHiddenPersonCard]);
 
 	return (
-		<div>
+		<div className={classes.App}>
 			<ToolPanel
 				slowly={slowly}
 				setSlowly={setSlowly}

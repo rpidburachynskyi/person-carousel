@@ -4,7 +4,7 @@
     width: 100%;
 
     &[attr-type=other] {        
-        animation: fade 1300ms ease-in-out;
+        animation: fade 1000ms ease-in-out;
 
         &[attr-slowly=true] {
             animation-duration: 4s;
