@@ -21,43 +21,20 @@ $fourth-card-initial: (
     'offset': 340px
 );
 
-@function getMainCard($small-coef) {
-    @return (
-        'height': map-get($main-card-initial, 'height') * $small-coef,
-        'width': map-get($main-card-initial, 'width') * $small-coef
-    );
+@function getMainCard($small-coef, $key) {
+    @return map-get($main-card-initial, $key) * $small-coef;
 }
 
-@function getSecondCard($small-coef) {
-    @return (
-        'height': map-get($second-card-initial, 'height') * $small-coef,
-        'width': map-get($second-card-initial, 'width') * $small-coef,
-        'offset': map-get($second-card-initial, 'offset') * $small-coef
-    );
+@function getSecondCard($small-coef, $key) {
+    @return map-get($second-card-initial, $key) * $small-coef;
 }
 
-@function getSecondCard($small-coef) {
-    @return (
-        'height': map-get($second-card-initial, 'height') * $small-coef,
-        'width': map-get($second-card-initial, 'width') * $small-coef,
-        'offset': map-get($second-card-initial, 'offset') * $small-coef
-    );
+@function getThirdCard($small-coef, $key) {
+    @return map-get($third-card-initial, $key) * $small-coef;
 }
 
-@function getThirdCard($small-coef) {
-    @return (
-        'height': map-get($third-card-initial, 'height') * $small-coef,
-        'width': map-get($third-card-initial, 'width') * $small-coef,
-        'offset': map-get($third-card-initial, 'offset') * $small-coef
-    );
-}
-
-@function getFourthCard($small-coef) {
-    @return (
-        'height': map-get($fourth-card-initial, 'height') * $small-coef,
-        'width': map-get($fourth-card-initial, 'width') * $small-coef,
-        'offset': map-get($fourth-card-initial, 'offset') * $small-coef
-    );
+@function getFourthCard($small-coef, $key) {
+    @return map-get($fourth-card-initial, $key) * $small-coef;
 }
 
 $cover-card-gradient: (
@@ -85,7 +62,7 @@ $transition-time: 300ms;
 }
 
 @mixin outerCardFactory ($isLeftOuterCard, $small-coef) {
-    $main-card-width: map-get(getMainCard($small-coef), 'width');
+    $main-card-width: getMainCard($small-coef, 'width');
 
     height: 0;
     width: 0;
@@ -125,11 +102,11 @@ $transition-time: 300ms;
 }
 
 @mixin fourthCardFactory($isLeftCard, $small-coef) {
-    $main-card-width: map-get(getMainCard($small-coef), 'width');
+    $main-card-width: getMainCard($small-coef, 'width');
 
-    $height: getFourthCard($small-coef, 'height'), $key: 'height');
-    $width: map-get(getFourthCard($small-coef), $key: 'width');
-    $offset: map-get(getFourthCard($small-coef), $key: 'offset');
+    $height: getFourthCard($small-coef, 'height');
+    $width: getFourthCard($small-coef, 'width');
+    $offset: getFourthCard($small-coef, 'offset');
 
     $multiply-coef: if($isLeftCard, -1, 1);
 
@@ -170,11 +147,11 @@ $transition-time: 300ms;
 }
 
 @mixin thirdCardFactory($isLeft, $small-coef) {
-    $main-card-width: map-get(getMainCard($small-coef), 'width');
+    $main-card-width: getMainCard($small-coef, 'width');
 
-    $height: map-get(getThirdCard($small-coef), $key: 'height');
-    $width: map-get(getThirdCard($small-coef), $key: 'width');
-    $offset: map-get(getThirdCard($small-coef), $key: 'offset');
+    $height: getThirdCard($small-coef, 'height');
+    $width: getThirdCard($small-coef,  'width');
+    $offset: getThirdCard($small-coef, 'offset');
 
     height: $height;
     width: $width;
@@ -217,11 +194,11 @@ $transition-time: 300ms;
 }
 
 @mixin secondCardFactory($isLeft, $small-coef) {
-    $main-card-width: map-get(getMainCard($small-coef), 'width');
+    $main-card-width: getMainCard($small-coef, 'width');
 
-    $height: map-get(getSecondCard($small-coef), $key: 'height');
-    $width: map-get(getSecondCard($small-coef), $key: 'width');
-    $offset: map-get(getSecondCard($small-coef), $key: 'offset');
+    $height: getSecondCard($small-coef, 'height');
+    $width: getSecondCard($small-coef, 'width');
+    $offset: getSecondCard($small-coef, 'offset');
 
     height: $height;
     width: $width;
@@ -270,8 +247,8 @@ $transition-time: 300ms;
 @mixin centralCardFactory($small-coef, $transition-time) {
     @include shadowForCardFactory($transition-time);
 
-    $main-card-width: map-get(getMainCard($small-coef), 'width');
-    $height: map-get($map: getMainCard($small-coef), $key: 'height');
+    $main-card-width: getMainCard($small-coef, 'width');
+    $height: getMainCard($small-coef, 'height');
 
     height: $height;
     width: $main-card-width;
@@ -298,7 +275,7 @@ $transition-time: 300ms;
 
 
 @mixin card-factory($index, $small-coef) {
-    $main-card-width: map-get(getMainCard($small-coef), 'width');
+    $main-card-width: getMainCard($small-coef, 'width');
 
     transition: all $transition-time ease;
     transition-property: height, width, left, top, transform, z-index, filter;
