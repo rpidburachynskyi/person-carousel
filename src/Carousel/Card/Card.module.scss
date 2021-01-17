@@ -55,26 +55,6 @@ $cover-card-gradient: (
     'to': #505166
 );
 
-@mixin gradientOverhead($transition-duration) {
-    & .cardBack {
-        &::after {
-            content:'';
-            position:absolute;
-            left:0; 
-            top:0;
-            width:100%; height:100%;
-            display:inline-block;
-            background-image: linear-gradient(90deg, #1b1c25ff 0%,#505166ff 100%);
-    
-            opacity: 0.9;
-    
-            z-index: 10000;
-    
-            transition: opacity $transition-duration ease;
-        }
-    }
-}
-
 @mixin shadowForCardFactory($transition-duration) {
     &::before {
         content: '';
@@ -133,14 +113,12 @@ $cover-card-gradient: (
 
 @mixin leftOuterCardFactory ($small-coef, $transition-duration) {
     @include anyCardProps();
-    @include gradientOverhead($transition-duration);
     @include shadowForCardFactory($transition-duration);
     @include outerCardFactory(true, $small-coef);
 }
 
 @mixin rightOuterCardFactory ($small-coef, $transition-duration) {
     @include anyCardProps();
-    @include gradientOverhead($transition-duration);
     @include shadowForCardFactory($transition-duration);
     @include outerCardFactory(false, $small-coef);
 }
@@ -182,14 +160,12 @@ $cover-card-gradient: (
 
 @mixin leftFourthCardFactory($small-coef,  $transition-duration) {
     @include anyCardProps();
-    @include gradientOverhead($transition-duration);
     @include shadowForCardFactory($transition-duration);
     @include fourthCardFactory(true, $small-coef);
 }
 
 @mixin rightFourthCardFactory($small-coef,  $transition-duration) {
     @include anyCardProps();
-    @include gradientOverhead($transition-duration);
     @include shadowForCardFactory($transition-duration);
     @include fourthCardFactory(false, $small-coef);
 }
@@ -233,14 +209,12 @@ $cover-card-gradient: (
 
 @mixin leftThirdCardFactory($small-coef,  $transition-duration) {
     @include anyCardProps();
-    @include gradientOverhead($transition-duration);
     @include shadowForCardFactory($transition-duration);
     @include thirdCardFactory(true, $small-coef);
 }
 
 @mixin rightThirdCardFactory($small-coef,  $transition-duration) {
     @include anyCardProps();
-    @include gradientOverhead($transition-duration);
     @include shadowForCardFactory($transition-duration);
     @include thirdCardFactory(false, $small-coef);
 }
@@ -288,21 +262,18 @@ $cover-card-gradient: (
 
 @mixin leftSecondCardFactory($small-coef,  $transition-duration) {
     @include anyCardProps();
-    @include gradientOverhead($transition-duration);
     @include shadowForCardFactory($transition-duration);
     @include secondCardFactory(true, $small-coef);
 }
 
 @mixin rightSecondCardFactory($small-coef,  $transition-duration) {
     @include anyCardProps();
-    @include gradientOverhead($transition-duration);
     @include shadowForCardFactory($transition-duration);
     @include secondCardFactory(false, $small-coef);
 }
 
 @mixin centralCardFactory($small-coef, $transition-duration) {
     @include anyCardProps();
-    @include gradientOverhead($transition-duration);
     @include shadowForCardFactory($transition-duration);
 
     $main-card-width: getMainCard($small-coef, 'width');
