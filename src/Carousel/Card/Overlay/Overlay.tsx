@@ -10,6 +10,7 @@ interface Props {
 }
 
 const Overlay = ({ type, layers, isMain }: Props) => {
+	const card = layers.find((l) => l.props.type === "card");
 	const personLayer = layers.find((l) => l.props.type === "person");
 	const otherLayers = layers.filter((l) => l.props.type === "other");
 
@@ -24,6 +25,7 @@ const Overlay = ({ type, layers, isMain }: Props) => {
 
 	return (
 		<div key={type} className={classes.overlay}>
+			{card}
 			<div
 				className={classes.layers}
 				attr-type={type}

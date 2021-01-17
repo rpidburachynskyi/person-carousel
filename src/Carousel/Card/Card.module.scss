@@ -1,6 +1,6 @@
 $main-card-initial: (
-    'height': 740px,
-    'width': 350px
+    'height': 730px,
+    'width': 340px
 );
 
 $second-card-initial: (
@@ -99,6 +99,8 @@ $transition-time: 300ms;
         background-image: linear-gradient(90deg, #1b1c25cc 0%,#505166cc 100%);
 
         opacity: 1;
+
+        z-index: 10000;
 
         transition: opacity $transition-time ease;
     }

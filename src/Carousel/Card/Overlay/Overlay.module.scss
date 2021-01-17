@@ -1,7 +1,10 @@
 .overlay {
+    height: 107%; // 106.068%;
+    width: 274.5%; // 270.5%;
+
     position: absolute;
-    height: 124%;
-    width: 265%;
+    bottom: 0;
+
     z-index: 100;
 
     pointer-events: none;
@@ -21,10 +24,13 @@
 
     position: absolute;
 
-    transition: 300ms all linear;
+    transition: 300ms width, height, top linear;
 
     &[attr-visibility=slice] {
-        width: 37.83%;
+        width: 36.96%;
+        height: 93.58%;
         overflow: hidden;
+
+        top: 6.6%;
     }
 }

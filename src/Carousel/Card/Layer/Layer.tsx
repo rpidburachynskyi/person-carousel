@@ -3,7 +3,7 @@ import classes from "./Layer.module.scss";
 interface Props {
 	src: string;
 
-	type: "person" | "other";
+	type: "person" | "other" | "card";
 	index: number;
 
 	visibility: string;
