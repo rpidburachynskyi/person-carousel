@@ -129,7 +129,7 @@ $transition-time: 300ms;
 
         &::before {
             height: 0;
-            transform: perspective(50px) rotateX(1deg) rotateY(0) translate($multiply-coef * 0px, 0px) skewX($multiply-coef * 45deg);
+            transform:perspective(19px) rotateX(2deg) translate($multiply-coef * 0px, 0px) skewX($multiply-coef * 45deg);
         }
     } @else {
         @if $index == 1 or $index == 7 { 
@@ -160,8 +160,8 @@ $transition-time: 300ms;
             z-index: 2;
 
             &::before {
-                height: 155px;
-                transform: perspective(50px) rotateX(1deg) rotateY(0) translate($multiply-coef * 93px, 167px) skewX($multiply-coef * 52deg);
+                height: 40%;
+                transform: perspective(19px) rotateX(1deg) translate($multiply-coef * 56%, 118%) skewX($multiply-coef * 45deg);
             }
         }
 
@@ -194,7 +194,9 @@ $transition-time: 300ms;
 
             &::before {
                 content: '';
-                transform: perspective(220px) rotateX(1deg) rotateY(0) translate($multiply-coef * 116px, 249px) skewX($multiply-coef * 45deg);
+                width: 80%;
+                height: 35%;
+                transform: perspective(19px) rotateX(2deg) translate($multiply-coef * 63%, 120%) skewX($multiply-coef * 45deg)
             }
         }
 
@@ -225,14 +227,13 @@ $transition-time: 300ms;
 
             &::before {
                 content: '';
-                height: 154px;
-                width: 60%;
-
+                height: 38%;
+                width: 50%;
+                /// 237
                 @if($index == 3) {
-                    transform: perspective(13px) rotateX(1deg) rotateY(0) translate(calc(-94px - 40%), 162px) skewX(-45deg);
-                }
-                @else {
-                    transform: perspective(13px) rotateX(1deg) rotateY(0) translate(94px, 162px) skewX(45deg);
+                    transform: perspective(19px) rotateX(2deg) translate($multiply-coef * 151%, 111%) skewX($multiply-coef * 45deg)
+                } @else {
+                    transform: perspective(19px) rotateX(2deg) translate(#{$multiply-coef * 75%}, 111%) skewX($multiply-coef * 45deg);
                 }
             }
         }
@@ -253,8 +254,9 @@ $transition-time: 300ms;
             filter: blur(0);
 
             &::before {
-                width: 250px;
-                transform: perspective(6px) rotateX(1deg) translate(-30px, 210px) skewX(0deg);
+                width: 80%;
+                height: 25.61%;
+                transform: perspective(19px) rotateX(2deg) translate(-10%, 110%) skewX(0deg);
             }
 
             &::after {
@@ -289,9 +291,8 @@ $transition-time: 300ms;
 
     @include useSizeWithCoef(1);
     @include useSize(1366, 0.7);
-    @include useSize(1024, 0.67);
     @include useSize(768, 0.68);
-    @include useSize(500, 0.42);
+    @include useSize(600, 0.42);
     @include useSize(372, 0.42);
     
 
