@@ -1,34 +1,40 @@
 import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
-import Card from "./Card/Card";
-import { CardType } from "./Card/Card";
+import CardComponent from "./Card";
 import classes from "./Carousel.module.scss";
 
 import back from "../Untitled-3.png";
 import Overlay from "./Card/Overlay";
+import { CardType, CardTypesEnum } from "../types";
 
-const getTypeByIndexes = (currentCardIndex: number, index: number) => {
-	if (currentCardIndex <= index - 4) return "left-outer";
-	if (currentCardIndex === index - 3) return "left-fourth";
-	if (currentCardIndex === index - 2) return "left-third";
-	if (currentCardIndex === index - 1) return "left-second";
-	if (currentCardIndex === index) return "main";
-	if (currentCardIndex === index + 1) return "right-second";
-	if (currentCardIndex === index + 2) return "right-third";
-	if (currentCardIndex === index + 3) return "right-fourth";
+const getTypeByIndexes = (
+	currentCardIndex: number,
+	index: number
+): CardTypesEnum => {
+	if (currentCardIndex <= index - 4) return CardTypesEnum.LEFT_OUTER;
+	if (currentCardIndex === index - 3) return CardTypesEnum.LEFT_FOURTH;
+	if (currentCardIndex === index - 2) return CardTypesEnum.LEFT_THIRD;
+	if (currentCardIndex === index - 1) return CardTypesEnum.LEFT_SECOND;
+	if (currentCardIndex === index) return CardTypesEnum.MAIN;
+	if (currentCardIndex === index + 1) return CardTypesEnum.RIGHT_SECOND;
+	if (currentCardIndex === index + 2) return CardTypesEnum.RIGHT_THIRD;
+	if (currentCardIndex === index + 3) return CardTypesEnum.RIGHT_FOURTH;
 
-	return "right-outer";
+	return CardTypesEnum.RIGTH_OUTER;
 };
 
-const sliceCards = (cards: number[], currentIndex: number) => {
+const sliceCards = (cards: CardType[], currentIndex: number) => {
 	return cards.filter(
 		(c, i) => i >= currentIndex - 6 && i <= currentIndex + 6
 	);
 };
 
-const Carousel = () => {
+interface Props {
+	cards: CardType[];
+}
+
+const Carousel = ({ cards }: Props) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const [cards] = useState(Array.from({ length: 130 }).map((c, i) => i));
 
 	const viewCards = sliceCards(cards, currentIndex);
 
@@ -54,12 +60,16 @@ const Carousel = () => {
 			<div className={classes.back}></div>
 			<div className={classes.carousel}>
 				<div className={classes.slider} {...handlers}>
-					{viewCards.map((c, i) => {
+					{viewCards.map((viewCard, viewCardIndex) => {
 						return (
-							<Card
-								key={c}
-								type={getTypeByIndexes(c, currentIndex)}
-								onMoveTo={() => turnTo(c)}
+							<CardComponent
+								key={viewCard.id}
+								card={viewCard}
+								type={getTypeByIndexes(
+									viewCardIndex,
+									currentIndex
+								)}
+								onMoveTo={() => turnTo(viewCardIndex)}
 							/>
 						);
 					})}

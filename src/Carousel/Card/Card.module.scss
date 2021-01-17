@@ -383,34 +383,3 @@ $cover-card-gradient: (
 
     @include useSizesWithConfig($transition-duration);
 }
-
-.cardBack {
-    width: 100%;
-    height: 100%;
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    overflow: hidden;
-
-    &[attr-blur=true] {
-        & .cardImage {
-            filter: saturate(0%);
-        }
-    }
-
-}
-
-.cardImage {
-    width: 100%;
-    height: 100%;
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    transition: filter $default-transition-duration linear;
-}

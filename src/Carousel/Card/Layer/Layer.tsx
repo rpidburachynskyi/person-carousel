@@ -1,20 +1,18 @@
+import { LayerType } from "../../../types";
 import classes from "./Layer.module.scss";
 
 interface Props {
-	src: string;
-
-	type: "person" | "other" | "card";
-	index: number;
+	layer: LayerType;
 
 	visibility: string;
 }
 
-const Layer = ({ src, type, visibility }: Props) => {
+const Layer = ({ layer, visibility }: Props) => {
 	return (
 		<img
 			className={classes.layer}
-			attr-type={type}
-			src={src}
+			attr-type={layer.type}
+			src={layer.src}
 			attr-visibility={visibility}
 		/>
 	);

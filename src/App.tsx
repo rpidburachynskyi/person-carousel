@@ -1,13 +1,12 @@
-import React from 'react';
-import './App.css';
-import Carousel from './Carousel';
+import React from "react";
+import Carousel from "./Carousel";
 
 function App() {
-  return (
-    <div className="App">
-      <Carousel />
-    </div>
-  );
+	return (
+		<div>
+			<Carousel cards={[]} />
+		</div>
+	);
 }
 
 export default App;
