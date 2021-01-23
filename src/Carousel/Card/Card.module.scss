@@ -55,11 +55,11 @@ $cover-card-gradient: (
     'to': #505166
 );
 
-@mixin shadowForCardFactory($transition-duration) {
+@mixin shadowForCardFactory($transition-duration, $height: 0, $transform: none) {
     &::before {
         content: '';
         width: 100%;
-        height: 220px;
+        height: $height;
         background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.6) 100%);
         position: absolute;
         bottom: 0;
@@ -68,6 +68,7 @@ $cover-card-gradient: (
         filter: blur(4px);
 
         transition: all $transition-duration ease;
+        transform: $transform;
     }
 }
 
@@ -81,75 +82,39 @@ $cover-card-gradient: (
     
 }
 
-@mixin outerCardFactory ($isLeftOuterCard, $small-coef) {
-    $main-card-width: getMainCard($small-coef, 'width');
-
+@mixin outerCardFactory ($small-coef) {
     height: 0;
     width: 0;
 
-    $multiply-coef: if($isLeftOuterCard, -1, 1);
-
     top: calc(50%);
-    @if $isLeftOuterCard { 
-        left: calc(50% - (#{$main-card-width} / 2) - 430px);
-
-        transform: perspective(100px)  rotateY(-1deg);
-    } @else {    
-        left: calc(50% + (#{$main-card-width} / 2) + 430px);
-
-        transform: perspective(100px) rotateY(0);
-    }
-
     filter: blur(4px);
-    
     z-index: 1;
-    
-
-    &::before {
-        height: 0;
-        transform:perspective(19px) rotateX(2deg) translate($multiply-coef * 0px, 0px) skewX($multiply-coef * 45deg);
-    } 
 }
 
 @mixin leftOuterCardFactory ($small-coef, $transition-duration) {
     @include anyCardProps();
-    @include shadowForCardFactory($transition-duration);
-    @include outerCardFactory(true, $small-coef);
+    @include shadowForCardFactory($transition-duration, 0, perspective(19px) rotateX(2deg) translate(0px, 0px) skewX(45deg));
+    @include outerCardFactory($small-coef);
+    
+    left: calc(50% - (#{getMainCard($small-coef, 'width')} / 2) - 430px);
+    transform: perspective(100px)  rotateY(-1deg);
 }
 
 @mixin rightOuterCardFactory ($small-coef, $transition-duration) {
     @include anyCardProps();
-    @include shadowForCardFactory($transition-duration);
-    @include outerCardFactory(false, $small-coef);
+    @include shadowForCardFactory($transition-duration, 0, perspective(19px) rotateX(2deg) translate(-1, 0px) skewX(-45deg));
+    @include outerCardFactory($small-coef);
+
+    left: calc(50% + (#{getMainCard($small-coef, 'width')} / 2) + 430px);
+    transform: perspective(100px) rotateY(0);
 }
 
-@mixin fourthCardFactory($isLeftCard, $small-coef) {
-    $main-card-width: getMainCard($small-coef, 'width');
+@mixin fourthCardFactory($multiply-coef, $small-coef) {
+    height: getFourthCard($small-coef, 'height');
+    width: getFourthCard($small-coef, 'width');
 
-    $height: getFourthCard($small-coef, 'height');
-    $width: getFourthCard($small-coef, 'width');
-    $offset: getFourthCard($small-coef, 'offset');
-
-    $multiply-coef: if($isLeftCard, -1, 1);
-
-    height: $height;
-    width: $width;
-
-    top: calc(50% - #{$height / 2});
-
-    @if($isLeftCard) {         
-        left: calc(50% - (#{$main-card-width} / 2) - #{$offset + 20px});
-
-        transform: perspective(12px) rotateY(-1deg);
-    }
-    @else {
-        left: calc(50% + (#{$main-card-width} / 2) + #{$offset - $width + 30px});
-
-        transform: perspective(12px) rotateY(1deg);
-    }
-
+    top: calc(50% - #{getFourthCard($small-coef, 'height') / 2});
     filter: blur(4px);
-
     z-index: 2;
 
     &::before {
@@ -161,13 +126,19 @@ $cover-card-gradient: (
 @mixin leftFourthCardFactory($small-coef,  $transition-duration) {
     @include anyCardProps();
     @include shadowForCardFactory($transition-duration);
-    @include fourthCardFactory(true, $small-coef);
+    @include fourthCardFactory(-1, $small-coef);
+
+    left: calc(50% - (#{getFourthCard($small-coef, 'width')} / 2) - #{getFourthCard($small-coef, 'offset') + 20px});
+    transform: perspective(12px) rotateY(-1deg);
 }
 
 @mixin rightFourthCardFactory($small-coef,  $transition-duration) {
     @include anyCardProps();
     @include shadowForCardFactory($transition-duration);
-    @include fourthCardFactory(false, $small-coef);
+    @include fourthCardFactory(1, $small-coef);
+
+    left: calc(50% + (#{getMainCard($small-coef, 'width')} / 2) + #{getFourthCard($small-coef, 'offset') - getFourthCard($small-coef, 'width') + 30px});
+    transform: perspective(12px) rotateY(1deg);
 }
 
 @mixin thirdCardFactory($isLeft, $small-coef) {
