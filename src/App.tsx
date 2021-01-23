@@ -13,7 +13,7 @@ import IronManLabel from "./images/iron-man/label.png";
 
 import ToolPanel from "./ToolPanel";
 
-const createHiddenPersonCard = (index: number) => {
+const createIronManCard = (index: number) => {
 	return {
 		id: `${index}`,
 		index: index,
@@ -54,45 +54,27 @@ const createExampleCard = (index: number) => {
 
 const createCard = (index: number) => {
 	if (Math.random() > 0.5) {
-		return createHiddenPersonCard(index);
+		return createIronManCard(index);
 	}
 	return createExampleCard(index);
 };
 
-const createCards = (
-	count: number,
-	{ onlyHiddenPersonCard = false }: { onlyHiddenPersonCard?: boolean }
-) => {
+const createCards = (count: number) => {
 	return Array.from({
 		length: count,
 	}).map((_, index) => {
-		if (onlyHiddenPersonCard) return createHiddenPersonCard(index);
-
 		return createCard(index);
 	});
 };
 
 function App() {
 	const [slowly, setSlowly] = useState(false);
-	const [onlyHiddenPersonCard, setOnlyHiddenPersonCard] = useState(false);
 
-	const [cards, setCards] = useState(
-		createCards(150, { onlyHiddenPersonCard })
-	);
-
-	useEffect(() => {
-		setCards(createCards(150, { onlyHiddenPersonCard }));
-		setCards(createCards(150, { onlyHiddenPersonCard }));
-	}, [onlyHiddenPersonCard]);
+	const [cards, setCards] = useState(createCards(150));
 
 	return (
 		<div className={classes.App}>
-			<ToolPanel
-				slowly={slowly}
-				setSlowly={setSlowly}
-				onlyHiddenPersonCard={onlyHiddenPersonCard}
-				setOnlyHiddenPersonCard={setOnlyHiddenPersonCard}
-			/>
+			<ToolPanel slowly={slowly} setSlowly={setSlowly} />
 			<Carousel slowly={slowly} cards={cards} />
 		</div>
 	);
