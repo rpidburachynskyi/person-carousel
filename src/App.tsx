@@ -29,7 +29,7 @@ const createCards = (count: number) => {
 function App() {
 	const [slowly, setSlowly] = useState(false);
 
-	const [cards, setCards] = useState(createCards(150));
+	const [cards] = useState(createCards(150));
 
 	return (
 		<div className={classes.App}>

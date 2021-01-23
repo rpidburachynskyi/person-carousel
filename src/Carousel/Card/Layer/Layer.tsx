@@ -16,6 +16,7 @@ const Layer = ({ layer, visibility, slowly }: LayerProps) => {
 			src={layer.src}
 			attr-visibility={visibility}
 			attr-slowly={String(slowly)}
+			alt="layer"
 		/>
 	);
 };

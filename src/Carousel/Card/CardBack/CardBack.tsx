@@ -15,7 +15,7 @@ const CardBack = ({ type, cardBack, slowly }: Props) => {
 			attr-blur={String(type !== CardTypesEnum.MAIN)}
 			attr-slowly={String(slowly)}
 		>
-			<img src={cardBack.src} className={classes.cardImage} />
+			<img src={cardBack.src} className={classes.cardImage} alt="card" />
 		</div>
 	);
 };
