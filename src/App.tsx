@@ -11,6 +11,10 @@ import IronManBack from "./images/iron-man/card.png";
 import IronMan from "./images/iron-man/iron-man.png";
 import IronManLabel from "./images/iron-man/label.png";
 
+import CaptainAmericaBack from "./images/captain-america/card.png";
+import CaptainAmerica from "./images/captain-america/captain-america.png";
+import CaptainAmericaLabel from "./images/captain-america/label.png";
+
 import ToolPanel from "./ToolPanel";
 
 const createIronManCard = (index: number) => {
@@ -35,6 +39,28 @@ const createIronManCard = (index: number) => {
 	};
 };
 
+const createCaptainAmericaCard = (index: number) => {
+	return {
+		id: `${index}`,
+		index: index,
+		cardBack: {
+			src: CaptainAmericaBack,
+		},
+		layers: [
+			{
+				index: 2,
+				type: LayerTypeEnums.PERSON,
+				src: CaptainAmerica,
+			},
+			{
+				index: 3,
+				type: LayerTypeEnums.OTHER,
+				src: CaptainAmericaLabel,
+			},
+		],
+	};
+};
+
 const createExampleCard = (index: number) => {
 	return {
 		id: `${index}`,
@@ -53,10 +79,13 @@ const createExampleCard = (index: number) => {
 };
 
 const createCard = (index: number) => {
-	if (Math.random() > 0.5) {
-		return createIronManCard(index);
-	}
-	return createExampleCard(index);
+	const creators = [
+		createIronManCard,
+		createCaptainAmericaCard,
+		// createExampleCard,
+	];
+
+	return creators[Math.floor(Math.random() * creators.length)](index);
 };
 
 const createCards = (count: number) => {

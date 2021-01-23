@@ -3,8 +3,6 @@ import { useSwipeable } from "react-swipeable";
 import CardComponent from "./Card";
 import classes from "./Carousel.module.scss";
 
-import back from "../Untitled-3.png";
-import Overlay from "./Card/Overlay";
 import { CardType, CardTypesEnum } from "../types";
 
 const getTypeByIndexes = (
