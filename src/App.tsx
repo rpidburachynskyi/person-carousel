@@ -7,10 +7,10 @@ import { LayerTypeEnums } from "./types";
 import CardBack from "./images/example/card.png";
 import RedBorder from "./images/example/red_border.png";
 
-import HiddenCardBack from "./images/hidden/card.png";
-import HiddenPerson from "./images/hidden/person.png";
-import HiddenFront from "./images/hidden/front.png";
-import HiddenBack from "./images/hidden/back.png";
+import IronManBack from "./images/iron-man/card.png";
+import IronMan from "./images/iron-man/iron-man.png";
+import IronManLabel from "./images/iron-man/label.png";
+
 import ToolPanel from "./ToolPanel";
 
 const createHiddenPersonCard = (index: number) => {
@@ -18,23 +18,18 @@ const createHiddenPersonCard = (index: number) => {
 		id: `${index}`,
 		index: index,
 		cardBack: {
-			src: HiddenCardBack,
+			src: IronManBack,
 		},
 		layers: [
 			{
-				index: 1,
-				type: LayerTypeEnums.OTHER,
-				src: HiddenBack,
-			},
-			{
 				index: 2,
 				type: LayerTypeEnums.PERSON,
-				src: HiddenPerson,
+				src: IronMan,
 			},
 			{
 				index: 3,
 				type: LayerTypeEnums.OTHER,
-				src: HiddenFront,
+				src: IronManLabel,
 			},
 		],
 	};
