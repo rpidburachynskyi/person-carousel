@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import classes from "./App.module.scss";
+import { createBlackWidowCard } from "./cards/createBlackWidow";
 import { createCaptainAmericaCard } from "./cards/createCaptainAmericaCard";
 import { createIronManCard } from "./cards/createIronManCard";
 import { createSpiderManCard } from "./cards/createSpiderManCard";
@@ -13,9 +14,10 @@ const createCard = (index: number) => {
 		createIronManCard,
 		createCaptainAmericaCard,
 		createSpiderManCard,
+		createBlackWidowCard
 	];
 
-	return creators[Math.floor(Math.random() * creators.length)](index);
+	return creators[index % creators.length](index);
 };
 
 const createCards = (count: number) => {
