@@ -9,8 +9,9 @@ import { createSpiderManCard } from "./cards/createSpiderManCard";
 import Carousel from "./Carousel";
 
 import ToolPanel from "./ToolPanel";
+import { CardType } from "./types";
 
-const createCard = (index: number) => {
+const createCard = (index: number): CardType => {
 	const creators = [
 		createIronManCard,
 		createCaptainAmericaCard,
@@ -22,7 +23,7 @@ const createCard = (index: number) => {
 	return creators[index % creators.length](index);
 };
 
-const createCards = (count: number) => {
+const createCards = (count: number): CardType[] => {
 	return Array.from({
 		length: count,
 	}).map((_, index) => {
