@@ -2,9 +2,9 @@ import IronManBack from "../images/iron-man/card.png";
 import IronMan from "../images/iron-man/iron-man.png";
 import IronManLabel from "../images/iron-man/label.png";
 
-import { LayerTypeEnums } from "../types";
+import { CardType, LayerRenderTypeEnums, LayerTypeEnums } from "../types";
 
-export const createIronManCard = (index: number) => {
+export const createIronManCard = (index: number): CardType => {
 	return {
 		id: `${index}`,
 		index: index,
@@ -16,6 +16,7 @@ export const createIronManCard = (index: number) => {
 				index: 2,
 				type: LayerTypeEnums.PERSON,
 				src: IronMan,
+				render: LayerRenderTypeEnums.IMAGE,
 			},
 			{
 				index: 3,

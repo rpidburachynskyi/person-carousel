@@ -3,15 +3,32 @@ export enum LayerTypeEnums {
 	OTHER = "other",
 }
 
+export enum LayerRenderTypeEnums {
+	IMAGE = "images",
+	HTML = "html",
+}
+
 export type CardBackType = {
 	src: string;
 };
 
-export type LayerType = {
+export type ImageLayerType = {
+	index: number;
+
+	render: LayerRenderTypeEnums.IMAGE;
 	type: LayerTypeEnums;
 	src: string;
-	index: number;
 };
+
+export type HtmlLayerType = {
+	index: number;
+
+	render: LayerRenderTypeEnums.HTML;
+	type: LayerTypeEnums;
+	html: string;
+};
+
+export type LayerType = ImageLayerType | HtmlLayerType;
 
 export type CardType = {
 	id: string;
