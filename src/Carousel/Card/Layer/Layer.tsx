@@ -1,4 +1,6 @@
-import { LayerType } from "../../../types";
+import { LayerRenderTypeEnums, LayerType } from "../../../types";
+import HtmlLayer from "./HtmlLayer";
+import ImageLayer from "./ImageLayer";
 import classes from "./Layer.module.scss";
 
 export interface LayerProps {
@@ -10,14 +12,23 @@ export interface LayerProps {
 
 const Layer = ({ layer, visibility, slowly }: LayerProps) => {
 	return (
-		<img
+		<div
 			className={classes.layer}
 			attr-type={layer.type}
-			src={layer.src}
 			attr-visibility={visibility}
 			attr-slowly={String(slowly)}
-			alt="layer"
-		/>
+		>
+			{layer.render === LayerRenderTypeEnums.IMAGE && (
+				<ImageLayer
+					layer={layer}
+					visibility={visibility}
+					slowly={slowly}
+				/>
+			)}
+			{layer.render === LayerRenderTypeEnums.HTML && (
+				<HtmlLayer layer={layer} visibility={visibility} />
+			)}
+		</div>
 	);
 };
 
