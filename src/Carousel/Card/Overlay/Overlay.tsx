@@ -25,7 +25,7 @@ const Overlay = ({ slowly, type, layers, isMain }: Props) => {
 	const _layers = (() => {
 		if (isMain)
 			return [personLayer, ...otherLayers].sort((a: any, b: any) => {
-				return a.props.index - b.props.index;
+				return a.props.layer.index - b.props.layer.index;
 			});
 
 		return [personLayer];
