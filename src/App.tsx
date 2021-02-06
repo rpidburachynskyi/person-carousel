@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import classes from "./App.module.scss";
 import { createBlackWidowCard } from "./cards/createBlackWidow";
 import { createCaptainAmericaCard } from "./cards/createCaptainAmericaCard";
+import { createHulk } from "./cards/createHulk";
 import { createIronManCard } from "./cards/createIronManCard";
 import { createSpiderManCard } from "./cards/createSpiderManCard";
 
@@ -14,7 +15,8 @@ const createCard = (index: number) => {
 		createIronManCard,
 		createCaptainAmericaCard,
 		createSpiderManCard,
-		createBlackWidowCard
+		createBlackWidowCard,
+		createHulk,
 	];
 
 	return creators[index % creators.length](index);
